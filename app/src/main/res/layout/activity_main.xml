@@ -32,6 +32,12 @@
             android:layout_height="100dp" />
 
         <Button
+            android:id="@+id/saving_in_calender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saving in Calender" />
+
+        <Button
             android:id="@+id/navigate_to_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

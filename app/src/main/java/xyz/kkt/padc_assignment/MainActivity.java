@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.provider.MediaStore;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import java.util.GregorianCalendar;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     Button takingPicWithCamera;
     @BindView(R.id.selecting_pic_from_storage)
     Button selectingPicFromStorage;
+    @BindView(R.id.saving_in_calender)
+    Button savingInCalender;
     @BindView(R.id.iv_hero)
     ImageView ivHero;
 
@@ -67,6 +72,21 @@ public class MainActivity extends AppCompatActivity {
     public void clickFab() {
         Snackbar.make(fab, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+    }
+
+    @OnClick(R.id.saving_in_calender)
+    public void clickSavingInCalender() {
+        GregorianCalendar calDate = new GregorianCalendar(2012, 10, 02);
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.Events.TITLE, "DevCon")
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, "https://goo.gl/maps/FUtneKdKjw62")
+
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, calDate.getTimeInMillis()+60*60*60*60*2)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, calDate.getTimeInMillis()+60*60*60*60*4);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     @OnClick(R.id.navigate_to_map)
