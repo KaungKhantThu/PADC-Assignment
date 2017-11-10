@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">PADC-Assignment</string>
     <string name="action_settings">Settings</string>
+    <string name="now_on_cinema">NOW ON CINEMA</string>
+    <string name="upcoming">UPCOMING</string>
+    <string name="most_popular">MOST POPULAR</string>
+    <string name="screen_title_movies">Movie Shelf</string>
+    <string name="name">It</string>
+    <string name="category"><b>(Drama, Horror, Thriller)</b></string>
+    <string name="desc">Current Popularity</string>
+    <string name="lbl_for_btn_movie_overview">Movie Overview</string>
+    <string name="score">7.4</string>
 </resources>

@@ -1,7 +1,6 @@
-package xyz.kkt.padc_assignment;
+package xyz.kkt.padc_assignment.activities;
 
 import android.Manifest;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -9,14 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.MediaStore;
-import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ShareCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -25,9 +23,9 @@ import android.widget.ImageView;
 import java.util.GregorianCalendar;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import xyz.kkt.padc_assignment.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
                 .putExtra(CalendarContract.Events.TITLE, "DevCon")
                 .putExtra(CalendarContract.Events.EVENT_LOCATION, "https://goo.gl/maps/FUtneKdKjw62")
 
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, calDate.getTimeInMillis()+60*60*60*60*2)
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, calDate.getTimeInMillis()+60*60*60*60*4);
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, calDate.getTimeInMillis() + 60 * 60 * 60 * 60 * 2)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, calDate.getTimeInMillis() + 60 * 60 * 60 * 60 * 4);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
@@ -91,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.navigate_to_map)
     public void clickNavigateToMap() {
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+        Intent intent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("https://goo.gl/maps/FUtneKdKjw62"));
         startActivity(intent);
     }
