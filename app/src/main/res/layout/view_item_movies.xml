@@ -37,7 +37,7 @@
             android:textSize="@dimen/text_regular_2x" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -48,11 +48,11 @@
             android:textSize="@dimen/text_regular_2x" />
 
         <TextView
-            android:id="@+id/category"
+            android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/name"
-            android:layout_below="@id/name"
+            android:layout_alignLeft="@id/tv_name"
+            android:layout_below="@id/tv_name"
             android:layout_marginTop="@dimen/margin_medium"
             android:layout_toRightOf="@id/iv_hero_movie"
             android:text="@string/category"
@@ -60,15 +60,27 @@
             android:textSize="@dimen/text_regular" />
 
         <TextView
-            android:id="@+id/desc"
+            android:id="@+id/lbl_popularity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/name"
-            android:layout_below="@id/category"
+            android:layout_alignLeft="@id/tv_name"
+            android:layout_below="@id/tv_category"
             android:layout_marginTop="@dimen/margin_medium"
             android:layout_toRightOf="@id/iv_hero_movie"
             android:text="@string/desc"
             android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_regular_2x" />
+
+        <TextView
+            android:id="@+id/tv_popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/lbl_popularity"
+            android:layout_below="@id/tv_category"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_toRightOf="@id/lbl_popularity"
+            android:text="@string/desc"
+            android:textColor="@color/secondary_text"
             android:textSize="@dimen/text_regular_2x" />
 
         <include
@@ -76,8 +88,8 @@
             layout="@layout/view_pod_rating_bar"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:layout_alignLeft="@id/name"
-            android:layout_below="@id/desc"
+            android:layout_alignLeft="@id/tv_name"
+            android:layout_below="@id/lbl_popularity"
             android:layout_marginLeft="@dimen/margin_medium_n"
             android:layout_marginTop="@dimen/margin_medium_2_n"
             android:layout_toRightOf="@id/iv_hero_movie" />

@@ -13,12 +13,10 @@ import xyz.kkt.padc_assignment.viewHolders.MovieViewHolder;
  * Created by Lenovo on 11/8/2017.
  */
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
-
-    private LayoutInflater mLayoutInflater;
+public class MovieAdapter extends BaseRecycleAdapter {
 
     public MovieAdapter(Context context) {
-        mLayoutInflater = LayoutInflater.from(context);
+        super(context);
     }
 
     @Override
@@ -27,13 +25,4 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         return new MovieViewHolder(itemView);
     }
 
-    @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 10;
-    }
 }

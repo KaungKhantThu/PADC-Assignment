@@ -1,7 +1,8 @@
 package xyz.kkt.padc_assignment.fragments;
 
 
-import android.support.v4.app.Fragment;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,16 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.kkt.padc_assignment.R;
 import xyz.kkt.padc_assignment.adapters.MovieAdapter;
+import xyz.kkt.padc_assignment.events.RestApiEvents;
 
 /**
  * Created by Lenovo on 11/8/2017.
  */
 
-public class MovieFragment extends Fragment {
+public class MovieFragment extends BaseFragment {
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -33,6 +39,18 @@ public class MovieFragment extends Fragment {
     public static MovieFragment newInstance() {
         MovieFragment fragment = new MovieFragment();
         return fragment;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -53,6 +71,17 @@ public class MovieFragment extends Fragment {
         rvMovies.setLayoutManager(gridLayoutManager);
 
         return view;
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onNewsDataLoaded(RestApiEvents.MovieDataLoadedEvent event) {
+        mMovieAdapter.appendNewData(event.getLoadMovies());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onErrorInvokingAPI(RestApiEvents.ErrorInvokingAPIEvent event) {
+        Snackbar.make(rvMovies, event.getErrorMsg(), BaseTransientBottomBar.LENGTH_INDEFINITE);
     }
 
 }
