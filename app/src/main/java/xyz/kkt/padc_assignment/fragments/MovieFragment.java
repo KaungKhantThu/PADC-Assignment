@@ -17,10 +17,17 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.kkt.padc_assignment.R;
 import xyz.kkt.padc_assignment.adapters.MovieAdapter;
+import xyz.kkt.padc_assignment.components.EmptyViewPod;
+import xyz.kkt.padc_assignment.components.SmartRecyclerView;
+import xyz.kkt.padc_assignment.components.SmartScrollListener;
+import xyz.kkt.padc_assignment.data.model.MovieModel;
+import xyz.kkt.padc_assignment.data.vo.MovieVO;
 import xyz.kkt.padc_assignment.events.RestApiEvents;
 
 /**
@@ -32,9 +39,14 @@ public class MovieFragment extends BaseFragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.rv_movies)
-    RecyclerView rvMovies;
+    SmartRecyclerView rvMovies;
+
+    private SmartScrollListener mSmartScrollListener;
 
     private MovieAdapter mMovieAdapter;
+
+    @BindView(R.id.vp_empty_movie)
+    EmptyViewPod vpEmptyMovie;
 
     public static MovieFragment newInstance() {
         MovieFragment fragment = new MovieFragment();
@@ -45,6 +57,12 @@ public class MovieFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        List<MovieVO> movieList = MovieModel.getInstance().getMovies();
+        if (!movieList.isEmpty()) {
+            mMovieAdapter.setNewData(movieList);
+        }else{
+            swipeRefreshLayout.setRefreshing(true);
+        }
     }
 
     @Override
@@ -65,10 +83,26 @@ public class MovieFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
         ButterKnife.bind(this, view);
 
+        rvMovies.setEmptyView(vpEmptyMovie);
+        rvMovies.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvMovies.setAdapter(mMovieAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1,
-                LinearLayoutManager.VERTICAL, false);
-        rvMovies.setLayoutManager(gridLayoutManager);
+
+        mSmartScrollListener = new SmartScrollListener(new SmartScrollListener.OnSmartScrollListener() {
+            @Override
+            public void onListEndReach() {
+                //Snackbar.make(rvNews, "This is all the data for Now.", Snackbar.LENGTH_LONG).show();
+                MovieModel.getInstance().loadMoreMovies();
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                MovieModel.getInstance().forceRefreshMovies();
+            }
+        });
+
+        rvMovies.addOnScrollListener(mSmartScrollListener);
 
         return view;
     }
@@ -77,11 +111,13 @@ public class MovieFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onNewsDataLoaded(RestApiEvents.MovieDataLoadedEvent event) {
         mMovieAdapter.appendNewData(event.getLoadMovies());
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onErrorInvokingAPI(RestApiEvents.ErrorInvokingAPIEvent event) {
         Snackbar.make(rvMovies, event.getErrorMsg(), BaseTransientBottomBar.LENGTH_INDEFINITE);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 }

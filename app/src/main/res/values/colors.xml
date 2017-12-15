@@ -9,4 +9,6 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
     <color name="rating_star_color">#F7D61D</color>
+    <color name="white_full">#FFF</color>
+    <color name="black_full">#000</color>
 </resources>

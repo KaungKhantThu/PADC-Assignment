@@ -10,4 +10,18 @@
     <string name="desc">Current Popularity</string>
     <string name="lbl_for_btn_movie_overview">Movie Overview</string>
     <string name="score">7.4</string>
+    <string name="msg_generic_no_data">No Data To Display</string>
+    <string name="lbl_refresh">Refresh</string>
+    <string name="movie_qoute">Fear can hold you prisoner. Hope will set you free.</string>
+    <string name="release_date">January 1994</string>
+    <string name="lbl_release_date">Released:</string>
+    <string name="synopis">Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.</string>
+    <string name="movie_name">The Shawshank Redemption</string>
+    <string name="lbl_tag_drama">Drama</string>
+    <string name="lbl_tag_crime">Crime</string>
+    <string name="duration">2 hours 22 minutes</string>
+    <string name="lbl_review"><u>Reviews</u></string>
+    <string name="review_name_one"><i>John wrote :</i></string>
+    <string name="what_review_name_one">Some birds aren\'t meant to be caged.</string>
+    <string name="dummy_movie_desc">Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.Fear can hold you prisoner. Hope will set you free.</string>
 </resources>

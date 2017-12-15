@@ -37,8 +37,22 @@ public class MovieModel {
         return objInstance;
     }
 
+    public List<MovieVO> getMovies() {
+        return mMovies;
+    }
+
     public void startLoadingMovies() {
         MovieDataAgentImpl.getInstance().loadMovies(AppConstants.ACCESS_TOKEN, moviePageIndex);
+    }
+
+    public void loadMoreMovies() {
+        MovieDataAgentImpl.getInstance().loadMovies(AppConstants.ACCESS_TOKEN, moviePageIndex);
+    }
+
+    public void forceRefreshMovies() {
+        mMovies = new ArrayList<>();
+        moviePageIndex = 1;
+        startLoadingMovies();
     }
 
     @Subscribe
@@ -46,5 +60,6 @@ public class MovieModel {
         mMovies.addAll(event.getLoadMovies());
         moviePageIndex = event.getLoadedPageIndex() + 1;
     }
+
 
 }

@@ -51,7 +51,7 @@ public class MovieViewHolder extends BaseViewHolder<MovieVO> {
         tvName.setText(data.getTitle());
 
         Glide.with(ivHeroMovie.getContext())
-                .load("https://image.tmdb.org/t/p"+data.getPosterPath())
+                .load("https://image.tmdb.org/t/p/original"+data.getPosterPath())
                 .into(ivHeroMovie);
 
     }

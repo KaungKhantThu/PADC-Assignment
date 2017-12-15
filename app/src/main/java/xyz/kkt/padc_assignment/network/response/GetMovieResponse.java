@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.kkt.padc_assignment.data.vo.MovieVO;
+import xyz.kkt.padc_assignment.network.SFCResponse;
 
 /**
  * Created by Lenovo on 12/3/2017.
  */
 
-public class GetMovieResponse {
+public class GetMovieResponse extends SFCResponse {
 
     @SerializedName("code")
     private int code;

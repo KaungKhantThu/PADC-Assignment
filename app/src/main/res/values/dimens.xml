@@ -35,4 +35,7 @@
     <dimen name="movie_list_image_width">150dp</dimen>
     <dimen name="movie_list_image_height">200dp</dimen>
     <dimen name="bg_dialog_button_radius">8dp</dimen>
+    <dimen name="trailer_movie_width">250dp</dimen>
+    <dimen name="trailer_movie_height">150dp</dimen>
+    <dimen name="margin_left_for_play_button">100dp</dimen>
 </resources>

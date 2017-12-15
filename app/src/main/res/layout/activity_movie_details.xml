@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#481818">
+
+            <RelativeLayout
+                android:id="@+id/rl_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/reading">
+
+                <ImageView
+                    android:id="@+id/iv_movie_logo"
+                    android:layout_width="@dimen/movie_list_image_width"
+                    android:layout_height="@dimen/movie_list_image_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/margin_medium_2"
+                    android:layout_marginTop="@dimen/margin_medium_2"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/reading" />
+
+                <TextView
+                    android:id="@+id/tv_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/ic_favorite_24dp"
+                    android:gravity="center"
+                    android:text="@string/score"
+                    android:textColor="@color/icons"
+                    android:textSize="@dimen/text_regular_2x" />
+
+                <TextView
+                    android:id="@+id/tv_movie_quote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/iv_movie_logo"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_marginTop="@dimen/margin_medium_2"
+                    android:layout_toRightOf="@id/iv_movie_logo"
+                    android:text="@string/movie_qoute"
+                    android:textColor="@color/black_full"
+                    android:textSize="@dimen/text_heading_1x" />
+
+                <TextView
+                    android:id="@+id/tv_synopis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/tv_movie_quote"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/tv_movie_quote"
+                    android:text="@string/synopis"
+                    android:textColor="@color/black_full"
+                    android:textSize="@dimen/text_regular_2x" />
+
+                <include
+                    android:id="@+id/vp_rating_bar"
+                    layout="@layout/view_pod_rating_bar"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_alignLeft="@id/iv_movie_logo"
+                    android:layout_below="@id/iv_movie_logo"
+                    android:layout_marginTop="@dimen/margin_medium" />
+
+                <TextView
+                    android:id="@+id/lbl_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/iv_movie_logo"
+                    android:layout_below="@id/vp_rating_bar"
+                    android:layout_marginTop="@dimen/margin_medium_2_n"
+                    android:text="@string/lbl_release_date"
+                    android:textColor="@color/black_full"
+                    android:textSize="@dimen/text_regular_3x" />
+
+                <TextView
+                    android:id="@+id/tv_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/lbl_release_date"
+                    android:layout_below="@id/vp_rating_bar"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:layout_toRightOf="@id/lbl_release_date"
+                    android:text="@string/release_date"
+                    android:textColor="@color/black_full"
+                    android:textSize="@dimen/text_regular_3x" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_movie_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_container"
+                android:background="#D8C8A0"
+                android:paddingBottom="@dimen/margin_medium_2"
+                android:paddingLeft="@dimen/margin_medium_2"
+                android:paddingTop="@dimen/margin_medium_2"
+                android:text="@string/movie_name"
+                android:textColor="#6A4F41"
+                android:textSize="@dimen/text_heading_1x" />
+
+            <TextView
+                android:id="@+id/lbl_tag_drama"
+                style="@style/GenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/tv_movie_name"
+                android:layout_marginLeft="@dimen/margin_medium_2"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:text="@string/lbl_tag_drama" />
+
+            <TextView
+                android:id="@+id/lbl_tick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/lbl_tag_drama"
+                android:layout_below="@id/tv_movie_name"
+                android:layout_marginLeft="@dimen/margin_medium"
+                android:layout_toRightOf="@id/lbl_tag_drama"
+                android:text="|"
+                android:textColor="@color/icons"
+                android:textSize="@dimen/text_regular_2x" />
+
+            <TextView
+                android:id="@+id/lbl_tag_crime"
+                style="@style/GenreButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/lbl_tag_drama"
+                android:layout_below="@id/tv_movie_name"
+                android:layout_marginLeft="@dimen/margin_medium"
+                android:layout_toRightOf="@id/lbl_tick"
+                android:text="@string/lbl_tag_crime" />
+
+            <TextView
+                android:id="@+id/tv_duration"
+                style="@style/DurationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/lbl_tag_drama"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/lbl_tag_drama"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:layout_marginLeft="@dimen/margin_medium_2"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:padding="@dimen/margin_medium"
+                android:text="@string/duration"
+                android:textSize="@dimen/text_regular_3x" />
+
+            <xyz.kkt.padc_assignment.components.SmartRecyclerView
+                android:id="@+id/rv_trailer_movies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_duration"
+                android:layout_marginTop="@dimen/margin_medium_2" />
+
+            <TextView
+                android:id="@+id/lbl_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_trailer_movies"
+                android:layout_marginLeft="@dimen/margin_medium_2"
+                android:layout_marginTop="@dimen/margin_medium_2"
+                android:text="@string/lbl_review"
+                android:textColor="@color/icons"
+                android:textSize="@dimen/text_heading_1x" />
+
+            <TextView
+                android:id="@+id/tv_review_name_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/lbl_review"
+                android:layout_below="@id/lbl_review"
+                android:layout_marginTop="@dimen/margin_medium_2"
+                android:text="@string/review_name_one"
+                android:textColor="@color/icons"
+                android:textSize="@dimen/text_regular_3x" />
+
+            <TextView
+                android:id="@+id/tv_what_review_name_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/lbl_review"
+                android:layout_below="@id/tv_review_name_one"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="@string/what_review_name_one"
+                android:textColor="@color/icons"
+                android:textSize="@dimen/text_regular_3x" />
+
+            <TextView
+                android:id="@+id/tv_review_name_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/lbl_review"
+                android:layout_below="@id/tv_what_review_name_one"
+                android:layout_marginTop="@dimen/margin_medium_2"
+                android:text="@string/review_name_one"
+                android:textColor="@color/icons"
+                android:textSize="@dimen/text_regular_3x" />
+
+            <TextView
+                android:id="@+id/tv_what_review_name_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/lbl_review"
+                android:layout_below="@id/tv_review_name_two"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="@string/what_review_name_one"
+                android:textColor="@color/icons"
+                android:textSize="@dimen/text_regular_3x" />
+
+            <TextView
+                android:id="@+id/tv_movie_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/lbl_review"
+                android:layout_below="@id/tv_what_review_name_two"
+                android:layout_marginTop="@dimen/margin_medium_2"
+                android:text="@string/dummy_movie_desc"
+                android:textColor="@color/icons"
+                android:textSize="@dimen/text_regular_3x" />
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/margin_medium_2"
+        android:src="@drawable/ic_add_24dp"
+        app:layout_anchor="@id/rl_container"
+        app:layout_anchorGravity="right|bottom" />
+
+</android.support.design.widget.CoordinatorLayout>

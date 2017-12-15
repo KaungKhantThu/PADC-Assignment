@@ -1,8 +1,7 @@
 package xyz.kkt.padc_assignment.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,10 +18,10 @@ public class MovieAdapter extends BaseRecycleAdapter {
         super(context);
     }
 
+
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mLayoutInflater.inflate(R.layout.view_item_movies, parent, false);
         return new MovieViewHolder(itemView);
     }
-
 }
