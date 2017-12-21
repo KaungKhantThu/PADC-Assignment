@@ -16,14 +16,14 @@ import xyz.kkt.padc_assignment.viewHolders.TrailerMovieViewHolder;
  * Created by Lenovo on 12/14/2017.
  */
 
-public class TrailerMovieAdapter extends BaseRecycleAdapter {
+public class TrailerMovieAdapter extends BaseRecycleAdapter<TrailerMovieViewHolder, MovieVO> {
 
     public TrailerMovieAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(TrailerMovieViewHolder holder, int position) {
 
     }
 

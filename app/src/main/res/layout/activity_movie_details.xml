@@ -5,22 +5,25 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:fitsSystemWindows="true">
 
-
-        <RelativeLayout
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#481818">
+            android:layout_height="320dp"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <RelativeLayout
                 android:id="@+id/rl_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/reading">
+                android:layout_height="260dp"
+                android:background="@drawable/bg_movie_details_app_bar"
+                android:fitsSystemWindows="true">
 
                 <ImageView
                     android:id="@+id/iv_movie_logo"
@@ -58,56 +61,94 @@
                     android:textColor="@color/black_full"
                     android:textSize="@dimen/text_heading_1x" />
 
-                <TextView
-                    android:id="@+id/tv_synopis"
+                <ScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/tv_movie_quote"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/tv_movie_quote"
-                    android:text="@string/synopis"
-                    android:textColor="@color/black_full"
-                    android:textSize="@dimen/text_regular_2x" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/tv_movie_quote">
 
-                <include
-                    android:id="@+id/vp_rating_bar"
-                    layout="@layout/view_pod_rating_bar"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:layout_alignLeft="@id/iv_movie_logo"
-                    android:layout_below="@id/iv_movie_logo"
-                    android:layout_marginTop="@dimen/margin_medium" />
-
-                <TextView
-                    android:id="@+id/lbl_release_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/iv_movie_logo"
-                    android:layout_below="@id/vp_rating_bar"
-                    android:layout_marginTop="@dimen/margin_medium_2_n"
-                    android:text="@string/lbl_release_date"
-                    android:textColor="@color/black_full"
-                    android:textSize="@dimen/text_regular_3x" />
-
-                <TextView
-                    android:id="@+id/tv_release_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/lbl_release_date"
-                    android:layout_below="@id/vp_rating_bar"
-                    android:layout_marginLeft="@dimen/margin_small"
-                    android:layout_toRightOf="@id/lbl_release_date"
-                    android:text="@string/release_date"
-                    android:textColor="@color/black_full"
-                    android:textSize="@dimen/text_regular_3x" />
+                    <TextView
+                        android:id="@+id/tv_synopis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/dummy_movie_desc"
+                        android:textColor="@color/black_full"
+                        android:textSize="@dimen/text_regular_2x" />
+                </ScrollView>
 
             </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="bottom"
+                android:alpha="0.8"
+                android:background="@drawable/bg_movie_details_app_bar"
+                android:fitsSystemWindows="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_medium_2"
+                    android:layout_marginTop="@dimen/margin_medium_3_n">
+
+                    <include
+                        android:id="@+id/vp_rating_bar"
+                        layout="@layout/view_pod_rating_bar"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentLeft="true" />
+
+                    <TextView
+                        android:id="@+id/lbl_release_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/vp_rating_bar"
+                        android:layout_below="@id/vp_rating_bar"
+                        android:layout_marginTop="@dimen/margin_medium_2_n"
+                        android:text="@string/lbl_release_date"
+                        android:textColor="@color/icons"
+                        android:textSize="@dimen/text_regular_3x" />
+
+                    <TextView
+                        android:id="@+id/tv_release_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/vp_rating_bar"
+                        android:layout_alignTop="@id/lbl_release_date"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:layout_toRightOf="@id/lbl_release_date"
+                        android:text="@string/release_date"
+                        android:textColor="@color/icons"
+                        android:textSize="@dimen/text_regular_3x" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#481818">
+
 
             <TextView
                 android:id="@+id/tv_movie_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rl_container"
                 android:background="#D8C8A0"
                 android:paddingBottom="@dimen/margin_medium_2"
                 android:paddingLeft="@dimen/margin_medium_2"
@@ -248,7 +289,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/margin_medium_2"
         android:src="@drawable/ic_add_24dp"
-        app:layout_anchor="@id/rl_container"
+        app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="right|bottom" />
 
 </android.support.design.widget.CoordinatorLayout>

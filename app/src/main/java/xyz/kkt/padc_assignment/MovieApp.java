@@ -10,9 +10,11 @@ import xyz.kkt.padc_assignment.data.model.MovieModel;
 
 public class MovieApp extends Application {
 
+    public static final String LOG_TAG = "MoviesApp";
+
     @Override
     public void onCreate() {
         super.onCreate();
-        MovieModel.getInstance().startLoadingMovies();
+        MovieModel.getInstance().startLoadingMovies(getApplicationContext());
     }
 }

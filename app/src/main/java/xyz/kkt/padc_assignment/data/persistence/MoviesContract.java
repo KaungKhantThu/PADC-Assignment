@@ -17,7 +17,8 @@ public class MoviesContract {
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     public static final String PATH_MOVIES = "movies";
-    public static final String PATH_MOVIE_GENRES = "movie_genres";
+    public static final String PATH_GENRES = "genres";
+    public static final String PATH_MOVIE_GENRE = "movie_genres";
     //public static final String PATH_LOGIN_USER = "login_user";
 
     public static final class MovieEntry implements BaseColumns {
@@ -30,8 +31,9 @@ public class MoviesContract {
         public static final String ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIES;//for retriving a single row from the table
 
-        public static final String TABLE_NAME = "movies";
+        public static final String TABLE_NAME = PATH_MOVIES;
 
+        public static final String COLUMN_MOVIE_ID = "movie_id";
         public static final String COLUMN_VOTE_COUNT = "vote_count";
         public static final String COLUMN_VIDEO = "video";
         public static final String COLUMN_VOTE_AVERAGE = "vote_average";
@@ -62,35 +64,65 @@ public class MoviesContract {
         }
     }
 
-    public static final class MovieGenreEntry implements BaseColumns {
+    public static final class GenreEntry implements BaseColumns {
         public static final Uri CONTENT_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_MOVIE_GENRES).build();
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_GENRES).build();
 
         public static final String DIR_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIE_GENRES;
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_GENRES;
 
         public static final String ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIE_GENRES;
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_GENRES;
 
-        public static final String TABLE_NAME = "movie_genres";
+        public static final String TABLE_NAME = PATH_GENRES;
 
-        public static final String COLUMN_MOVIE_TITLE = "movie_title";
-        public static final String COLUMN_GENRE = "genre";
+        public static final String COLUMN_GENRE_ID = "genre_id";
+        public static final String COLUMN_GENRE_NAME = "genre_name";
 
         public static Uri buildMovieImageUri(long id) {
             //content://xyz.aungpyaephyo.padc.myanmarattractions/attraction_images/1
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+    }
 
-        public static Uri buildMovieGenreUriWithTitle(String attractionTitle) {
-            //content://xyz.aungpyaephyo.padc.myanmarattractions/attraction_images?attraction_title=Yangon
+    public static final class MovieGenreEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_MOVIE_GENRE).build();
+
+        public static final String DIR_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIE_GENRE;
+
+        public static final String ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIE_GENRE;
+
+        public static final String TABLE_NAME = PATH_MOVIE_GENRE;
+
+        public static final String COLUMN_MOVIE_ID = "movie_id";
+        public static final String COLUMN_GENRE_ID = "genre_id";
+
+        public static Uri buildMovieGenreUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildMovieGenreUriWithMovieId(String movieId) {
             return CONTENT_URI.buildUpon()
-                    .appendQueryParameter(COLUMN_MOVIE_TITLE, attractionTitle)
+                    .appendQueryParameter(COLUMN_MOVIE_ID, movieId)
                     .build();
         }
 
-        public static String getAttractionTitleFromParam(Uri uri) {
-            return uri.getQueryParameter(COLUMN_MOVIE_TITLE);
+        public static String getMovieIdFromParam(Uri uri) {
+            return uri.getQueryParameter(COLUMN_MOVIE_ID);
+        }
+
+        public static Uri buildMovieGenreUriWithGenreId(String genreId) {
+            return CONTENT_URI.buildUpon()
+                    .appendQueryParameter(COLUMN_GENRE_ID, genreId)
+                    .build();
+        }
+
+        public static String getGenreIdFromParam(Uri uri) {
+            return uri.getQueryParameter(COLUMN_GENRE_ID);
         }
     }
 

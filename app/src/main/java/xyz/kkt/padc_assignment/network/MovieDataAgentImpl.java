@@ -1,6 +1,8 @@
 package xyz.kkt.padc_assignment.network;
 
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,7 +54,7 @@ public class MovieDataAgentImpl implements MovieDataAgent {
     }
 
     @Override
-    public void loadMovies(String accessToken, int pageNo) {
+    public void loadMovies(String accessToken, int pageNo, final Context context) {
         Call<GetMovieResponse> loadMMNewsCall = theAPI.loadMovies(accessToken, pageNo);
         loadMMNewsCall.enqueue(new SFCCallback<GetMovieResponse>() {
             @Override
@@ -61,7 +63,7 @@ public class MovieDataAgentImpl implements MovieDataAgent {
                 if (getMovieResponse != null
                         && getMovieResponse.getMovieVOList().size() > 0) {
                     RestApiEvents.MovieDataLoadedEvent movieDataLoadedEvent = new RestApiEvents.MovieDataLoadedEvent(
-                            getMovieResponse.getPageNo(), getMovieResponse.getMovieVOList());
+                            getMovieResponse.getPageNo(), getMovieResponse.getMovieVOList(), context);
                     EventBus.getDefault().post(movieDataLoadedEvent);
                 }
             }

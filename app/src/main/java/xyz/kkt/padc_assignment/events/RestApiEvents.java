@@ -1,5 +1,7 @@
 package xyz.kkt.padc_assignment.events;
 
+import android.content.Context;
+
 import java.util.List;
 
 import xyz.kkt.padc_assignment.data.vo.MovieVO;
@@ -30,10 +32,12 @@ public class RestApiEvents {
     public static class MovieDataLoadedEvent {
         private int loadedPageIndex;
         private List<MovieVO> loadMovies;
+        private Context context;
 
-        public MovieDataLoadedEvent(int loadedPageIndex, List<MovieVO> loadMovies) {
+        public MovieDataLoadedEvent(int loadedPageIndex, List<MovieVO> loadMovies, Context context) {
             this.loadedPageIndex = loadedPageIndex;
             this.loadMovies = loadMovies;
+            this.context = context;
         }
 
         public int getLoadedPageIndex() {
@@ -42,6 +46,10 @@ public class RestApiEvents {
 
         public List<MovieVO> getLoadMovies() {
             return loadMovies;
+        }
+
+        public Context getContext() {
+            return context;
         }
     }
 
