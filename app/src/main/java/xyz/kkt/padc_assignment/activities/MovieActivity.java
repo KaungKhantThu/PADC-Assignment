@@ -1,5 +1,6 @@
 package xyz.kkt.padc_assignment.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
@@ -18,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.kkt.padc_assignment.R;
 import xyz.kkt.padc_assignment.adapters.MovieTabAdapter;
+import xyz.kkt.padc_assignment.delegates.MovieItemDelegate;
 import xyz.kkt.padc_assignment.events.RestApiEvents;
 import xyz.kkt.padc_assignment.fragments.MovieFragment;
 
@@ -25,7 +27,7 @@ import xyz.kkt.padc_assignment.fragments.MovieFragment;
  * Created by Lenovo on 11/8/2017.
  */
 
-public class MovieActivity extends BaseActivity {
+public class MovieActivity extends BaseActivity implements MovieItemDelegate {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -69,5 +71,9 @@ public class MovieActivity extends BaseActivity {
     }
 
 
-
+    @Override
+    public void onTapMovieItem() {
+        Intent intent = MovieDetailsActivity.newIntent(getApplicationContext());
+        startActivity(intent);
+    }
 }

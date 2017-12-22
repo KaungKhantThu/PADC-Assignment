@@ -1,6 +1,7 @@
 package xyz.kkt.padc_assignment.fragments;
 
 
+import android.content.Context;
 import android.database.Cursor;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
@@ -34,6 +35,7 @@ import xyz.kkt.padc_assignment.components.SmartScrollListener;
 import xyz.kkt.padc_assignment.data.model.MovieModel;
 import xyz.kkt.padc_assignment.data.persistence.MoviesContract;
 import xyz.kkt.padc_assignment.data.vo.MovieVO;
+import xyz.kkt.padc_assignment.delegates.MovieItemDelegate;
 import xyz.kkt.padc_assignment.events.RestApiEvents;
 
 /**
@@ -43,6 +45,8 @@ import xyz.kkt.padc_assignment.events.RestApiEvents;
 public class MovieFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int MOVIES_LIST_LOADER_ID = 1;
+
+    private MovieItemDelegate mMovieItemDelegate;
 
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -60,6 +64,12 @@ public class MovieFragment extends BaseFragment implements LoaderManager.LoaderC
     public static MovieFragment newInstance() {
         MovieFragment fragment = new MovieFragment();
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mMovieItemDelegate = (MovieItemDelegate) context;
     }
 
     @Override
@@ -83,7 +93,7 @@ public class MovieFragment extends BaseFragment implements LoaderManager.LoaderC
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMovieAdapter = new MovieAdapter(getContext());
+        mMovieAdapter = new MovieAdapter(getContext(), mMovieItemDelegate);
     }
 
     @Nullable

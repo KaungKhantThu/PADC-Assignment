@@ -59,6 +59,7 @@ public class MovieDataAgentImpl implements MovieDataAgent {
         loadMMNewsCall.enqueue(new SFCCallback<GetMovieResponse>() {
             @Override
             public void onResponse(Call<GetMovieResponse> call, Response<GetMovieResponse> response) {
+                super.onResponse(call, response);//call parent method since parent is abstract class
                 GetMovieResponse getMovieResponse = response.body();
                 if (getMovieResponse != null
                         && getMovieResponse.getMovieVOList().size() > 0) {

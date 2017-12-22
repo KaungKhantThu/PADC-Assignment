@@ -86,47 +86,30 @@
                 android:layout_gravity="bottom"
                 android:alpha="0.8"
                 android:background="@drawable/bg_movie_details_app_bar"
-                android:fitsSystemWindows="true">
+                app:layout_collapseMode="pin">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_medium_2"
-                    android:layout_marginTop="@dimen/margin_medium_3_n">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <include
-                        android:id="@+id/vp_rating_bar"
+                        android:id="@+id/vp_popularity_bar"
                         layout="@layout/view_pod_rating_bar"
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentLeft="true" />
+                        android:layout_width="150dp"
+                        android:layout_height="30dp" />
 
                     <TextView
-                        android:id="@+id/lbl_release_date"
+                        android:id="@+id/tv_released_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@id/vp_rating_bar"
-                        android:layout_below="@id/vp_rating_bar"
-                        android:layout_marginTop="@dimen/margin_medium_2_n"
-                        android:text="@string/lbl_release_date"
-                        android:textColor="@color/icons"
-                        android:textSize="@dimen/text_regular_3x" />
-
-                    <TextView
-                        android:id="@+id/tv_release_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/vp_rating_bar"
-                        android:layout_alignTop="@id/lbl_release_date"
-                        android:layout_marginLeft="@dimen/margin_small"
-                        android:layout_toRightOf="@id/lbl_release_date"
                         android:text="@string/release_date"
-                        android:textColor="@color/icons"
-                        android:textSize="@dimen/text_regular_3x" />
-
-                </RelativeLayout>
+                        android:textColor="@color/white_full"
+                        android:textSize="@dimen/text_regular_2x" />
+                </LinearLayout>
 
             </android.support.v7.widget.Toolbar>
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -157,48 +140,22 @@
                 android:textColor="#6A4F41"
                 android:textSize="@dimen/text_heading_1x" />
 
-            <TextView
-                android:id="@+id/lbl_tag_drama"
-                style="@style/GenreButton"
+            <xyz.kkt.padc_assignment.components.SmartRecyclerView
+                android:id="@+id/rv_list_tags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/tv_movie_name"
-                android:layout_marginLeft="@dimen/margin_medium_2"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:text="@string/lbl_tag_drama" />
-
-            <TextView
-                android:id="@+id/lbl_tick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/lbl_tag_drama"
-                android:layout_below="@id/tv_movie_name"
-                android:layout_marginLeft="@dimen/margin_medium"
-                android:layout_toRightOf="@id/lbl_tag_drama"
-                android:text="|"
-                android:textColor="@color/icons"
-                android:textSize="@dimen/text_regular_2x" />
-
-            <TextView
-                android:id="@+id/lbl_tag_crime"
-                style="@style/GenreButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/lbl_tag_drama"
-                android:layout_below="@id/tv_movie_name"
-                android:layout_marginLeft="@dimen/margin_medium"
-                android:layout_toRightOf="@id/lbl_tick"
-                android:text="@string/lbl_tag_crime" />
+                android:layout_marginTop="@dimen/margin_medium_2" />
 
             <TextView
                 android:id="@+id/tv_duration"
                 style="@style/DurationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/lbl_tag_drama"
+                android:layout_alignLeft="@id/rv_list_tags"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@id/lbl_tag_drama"
+                android:layout_below="@id/rv_list_tags"
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_marginLeft="@dimen/margin_medium_2"
                 android:layout_marginTop="@dimen/margin_medium"
@@ -224,56 +181,19 @@
                 android:textColor="@color/icons"
                 android:textSize="@dimen/text_heading_1x" />
 
-            <TextView
-                android:id="@+id/tv_review_name_one"
+            <xyz.kkt.padc_assignment.components.SmartRecyclerView
+                android:id="@+id/rv_review_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/lbl_review"
-                android:layout_below="@id/lbl_review"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:text="@string/review_name_one"
-                android:textColor="@color/icons"
-                android:textSize="@dimen/text_regular_3x" />
-
-            <TextView
-                android:id="@+id/tv_what_review_name_one"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/lbl_review"
-                android:layout_below="@id/tv_review_name_one"
-                android:layout_marginTop="@dimen/margin_small"
-                android:text="@string/what_review_name_one"
-                android:textColor="@color/icons"
-                android:textSize="@dimen/text_regular_3x" />
-
-            <TextView
-                android:id="@+id/tv_review_name_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/lbl_review"
-                android:layout_below="@id/tv_what_review_name_one"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:text="@string/review_name_one"
-                android:textColor="@color/icons"
-                android:textSize="@dimen/text_regular_3x" />
-
-            <TextView
-                android:id="@+id/tv_what_review_name_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/lbl_review"
-                android:layout_below="@id/tv_review_name_two"
-                android:layout_marginTop="@dimen/margin_small"
-                android:text="@string/what_review_name_one"
-                android:textColor="@color/icons"
-                android:textSize="@dimen/text_regular_3x" />
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/lbl_review"/>
 
             <TextView
                 android:id="@+id/tv_movie_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/lbl_review"
-                android:layout_below="@id/tv_what_review_name_two"
+                android:layout_below="@id/rv_review_list"
                 android:layout_marginTop="@dimen/margin_medium_2"
                 android:text="@string/dummy_movie_desc"
                 android:textColor="@color/icons"

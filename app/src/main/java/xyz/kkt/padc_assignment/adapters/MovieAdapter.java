@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import xyz.kkt.padc_assignment.R;
 import xyz.kkt.padc_assignment.data.vo.MovieVO;
+import xyz.kkt.padc_assignment.delegates.MovieItemDelegate;
 import xyz.kkt.padc_assignment.viewHolders.MovieViewHolder;
 
 /**
@@ -15,14 +16,17 @@ import xyz.kkt.padc_assignment.viewHolders.MovieViewHolder;
 
 public class MovieAdapter extends BaseRecycleAdapter<MovieViewHolder, MovieVO> {
 
-    public MovieAdapter(Context context) {
+    private MovieItemDelegate mMovieItemDelegate;
+
+    public MovieAdapter(Context context, MovieItemDelegate movieItemDelegate) {
         super(context);
+        mMovieItemDelegate = movieItemDelegate;
     }
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mLayoutInflater.inflate(R.layout.view_item_movies, parent, false);
-        return new MovieViewHolder(itemView);
+        return new MovieViewHolder(itemView, mMovieItemDelegate);
     }
 
 }

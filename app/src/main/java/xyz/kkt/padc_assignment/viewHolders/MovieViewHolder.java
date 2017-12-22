@@ -10,9 +10,11 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import xyz.kkt.padc_assignment.R;
 import xyz.kkt.padc_assignment.adapters.BaseRecycleAdapter;
 import xyz.kkt.padc_assignment.data.vo.MovieVO;
+import xyz.kkt.padc_assignment.delegates.MovieItemDelegate;
 
 /**
  * Created by Lenovo on 11/8/2017.
@@ -33,9 +35,12 @@ public class MovieViewHolder extends BaseViewHolder<MovieVO> {
     @BindView(R.id.btn_movie_overview)
     Button btnMovieOverview;
 
-    public MovieViewHolder(View itemView) {
+    private MovieItemDelegate mMovieItemDelegate;
+
+    public MovieViewHolder(View itemView, MovieItemDelegate movieItemDelegate) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        mMovieItemDelegate = movieItemDelegate;
     }
 
     @Override
@@ -51,7 +56,7 @@ public class MovieViewHolder extends BaseViewHolder<MovieVO> {
         tvName.setText(data.getTitle());
 
         Glide.with(ivHeroMovie.getContext())
-                .load("https://image.tmdb.org/t/p/original"+data.getPosterPath())
+                .load("https://image.tmdb.org/t/p/original" + data.getPosterPath())
                 .into(ivHeroMovie);
 
     }
@@ -60,4 +65,10 @@ public class MovieViewHolder extends BaseViewHolder<MovieVO> {
     public void onClick(View view) {
 
     }
+
+    @OnClick(R.id.btn_movie_overview)
+    public void onTapMovieOverview() {
+        mMovieItemDelegate.onTapMovieItem();
+    }
+
 }

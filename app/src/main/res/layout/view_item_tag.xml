@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lbl_tag_drama"
+    style="@style/GenreButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_medium_2"
+    android:text="@string/lbl_tag_drama" />
