@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,9 +23,21 @@ public class MoviesProvider extends ContentProvider {
     public static final int MOVIE_GENRE = 300;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
+    private static final SQLiteQueryBuilder sMovieGenre_GenreIJ;
 
 
     private MoviesDBHelper mDBHelper;
+
+    static {
+        sMovieGenre_GenreIJ = new SQLiteQueryBuilder();
+        //movie_genre INNER JOIN genre ON movie_genre.genre_id = genre.genre_id
+        sMovieGenre_GenreIJ.setTables(
+                MoviesContract.MovieGenreEntry.TABLE_NAME + " INNER JOIN " +
+                        MoviesContract.GenreEntry.TABLE_NAME + " ON " +
+                        MoviesContract.MovieGenreEntry.TABLE_NAME + "." + MoviesContract.MovieGenreEntry.COLUMN_GENRE_ID + " = " +
+                        MoviesContract.GenreEntry.TABLE_NAME + "." + MoviesContract.GenreEntry.COLUMN_GENRE_ID);
+
+    }
 
     private static UriMatcher buildUriMatcher() {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);//passing initial condition
@@ -69,11 +82,33 @@ public class MoviesProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Cursor queryCursor = mDBHelper.getReadableDatabase().query(getTableName(uri), projection
-                , selection, selectionArgs, null, null, sortOrder);
-        if (getContext() != null) {
-            queryCursor.setNotificationUri(getContext().getContentResolver(), uri);//retelling the cursor to point to the query uri if the uri is changed
+        Cursor queryCursor;
+        switch (sUriMatcher.match(uri)) {
+            case MOVIE_GENRE:
+                queryCursor = sMovieGenre_GenreIJ.query(mDBHelper.getReadableDatabase(),
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                break;
+
+            default:
+                queryCursor = mDBHelper.getReadableDatabase().query(getTableName(uri),
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
         }
+
+
+        if (getContext() != null) {
+            queryCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        }
+
         return queryCursor;
     }
 

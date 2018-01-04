@@ -36,6 +36,7 @@ public class MovieViewHolder extends BaseViewHolder<MovieVO> {
     Button btnMovieOverview;
 
     private MovieItemDelegate mMovieItemDelegate;
+    private MovieVO movieVO;
 
     public MovieViewHolder(View itemView, MovieItemDelegate movieItemDelegate) {
         super(itemView);
@@ -49,10 +50,14 @@ public class MovieViewHolder extends BaseViewHolder<MovieVO> {
 //        for (int i = 0; i < data.getGenreIdList().size(); i++) {
 //            genre = genre + data.getGenreIdList().get(i) + " ";
 //        }
+//        tvCategory.setText(genre);
+
+        movieVO = data;
+
         tvScore.setText(String.valueOf(data.getVoteAverage()));
 
-        //tvCategory.setText(genre);
-        tvPopularity.setText(String.valueOf(data.getPopularity()));
+
+        // tvPopularity.setText(String.valueOf(data.getPopularity()));
         tvName.setText(data.getTitle());
 
         Glide.with(ivHeroMovie.getContext())
@@ -68,7 +73,7 @@ public class MovieViewHolder extends BaseViewHolder<MovieVO> {
 
     @OnClick(R.id.btn_movie_overview)
     public void onTapMovieOverview() {
-        mMovieItemDelegate.onTapMovieItem();
+        mMovieItemDelegate.onTapMovieItem(movieVO);
     }
 
 }

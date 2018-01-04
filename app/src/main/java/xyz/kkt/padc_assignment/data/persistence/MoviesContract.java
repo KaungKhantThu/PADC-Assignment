@@ -77,9 +77,8 @@ public class MoviesContract {
         public static final String TABLE_NAME = PATH_GENRES;
 
         public static final String COLUMN_GENRE_ID = "genre_id";
-        public static final String COLUMN_GENRE_NAME = "genre_name";
 
-        public static Uri buildMovieImageUri(long id) {
+        public static Uri buildMovieGenreUri(long id) {
             //content://xyz.aungpyaephyo.padc.myanmarattractions/attraction_images/1
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }

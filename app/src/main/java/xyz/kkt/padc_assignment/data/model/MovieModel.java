@@ -17,6 +17,7 @@ import xyz.kkt.padc_assignment.data.vo.MovieVO;
 import xyz.kkt.padc_assignment.events.RestApiEvents;
 import xyz.kkt.padc_assignment.network.MovieDataAgentImpl;
 import xyz.kkt.padc_assignment.utils.AppConstants;
+import xyz.kkt.padc_assignment.utils.ConfigUtils;
 
 
 /**
@@ -28,8 +29,6 @@ public class MovieModel {
     private static MovieModel objInstance;
 
     private List<MovieVO> mMovies;
-
-    private int moviePageIndex = 1;
 
     private MovieModel() {
         EventBus.getDefault().register(this);
@@ -48,34 +47,59 @@ public class MovieModel {
     }
 
     public void startLoadingMovies(Context context) {
-        MovieDataAgentImpl.getInstance().loadMovies(AppConstants.ACCESS_TOKEN, moviePageIndex, context);
+        MovieDataAgentImpl.getInstance().loadMovies(AppConstants.ACCESS_TOKEN, ConfigUtils.getObjInstance().loadPageIndex(), context);
     }
 
     public void loadMoreMovies(Context context) {
-        MovieDataAgentImpl.getInstance().loadMovies(AppConstants.ACCESS_TOKEN, moviePageIndex, context);
+        int pageIndex = ConfigUtils.getObjInstance().loadPageIndex();
+        MovieDataAgentImpl.getInstance().loadMovies(AppConstants.ACCESS_TOKEN, pageIndex, context);
     }
 
     public void forceRefreshMovies(Context context) {
         mMovies = new ArrayList<>();
-        moviePageIndex = 1;
+        ConfigUtils.getObjInstance().savePageIndex(1);
         startLoadingMovies(context);
     }
 
     @Subscribe
     public void onMovieDataLoaded(RestApiEvents.MovieDataLoadedEvent event) {
         mMovies.addAll(event.getLoadMovies());
-        moviePageIndex = event.getLoadedPageIndex() + 1;
+        ConfigUtils.getObjInstance().savePageIndex(event.getLoadedPageIndex() + 1);
 
         //TODO Logic to save the data in Persistence Layer
 
         ContentValues[] moviesCVs = new ContentValues[event.getLoadMovies().size()];
+        List<ContentValues> genreCVlist = new ArrayList<>();
+        List<ContentValues> genreInMovieCVList = new ArrayList<>();
+
         for (int index = 0; index < moviesCVs.length; index++) {
-            moviesCVs[index] = event.getLoadMovies().get(index).parseToContentValues();
+            MovieVO movie = event.getLoadMovies().get(index);
+            moviesCVs[index] = movie.parseToContentValues();
+
+            for (Integer genre : movie.getGenreIdList()) {
+                ContentValues genreCV = new ContentValues();
+                genreCV.put(MoviesContract.GenreEntry.COLUMN_GENRE_ID, genre);
+                genreCVlist.add(genreCV);
+
+                ContentValues genreInMovieCV = new ContentValues();
+                genreInMovieCV.put(MoviesContract.MovieGenreEntry.COLUMN_MOVIE_ID, movie.getId());
+                genreInMovieCV.put(MoviesContract.MovieGenreEntry.COLUMN_GENRE_ID, genre);
+                genreInMovieCVList.add(genreInMovieCV);
+            }
         }
 
-        int insertedRows = event.getContext().getContentResolver().bulkInsert(MoviesContract.MovieEntry.CONTENT_URI,
+        int insertedMovieRows = event.getContext().getContentResolver().bulkInsert(MoviesContract.MovieEntry.CONTENT_URI,
                 moviesCVs);
-        Log.d(MovieApp.LOG_TAG, "Inserted Rows : " + insertedRows);
+        Log.d(MovieApp.LOG_TAG, "Inserted Movie Rows : " + insertedMovieRows);
+
+        int insertedGenreRows = event.getContext().getContentResolver().bulkInsert(MoviesContract.GenreEntry.CONTENT_URI,
+                genreCVlist.toArray(new ContentValues[0]));
+        Log.d(MovieApp.LOG_TAG, "Inserted Genre Rows : " + insertedGenreRows);
+
+        int insertedGenreInMovieRows = event.getContext().getContentResolver().bulkInsert(MoviesContract.MovieGenreEntry.CONTENT_URI,
+                genreInMovieCVList.toArray(new ContentValues[0]));
+        Log.d(MovieApp.LOG_TAG, "Inserted Genre In Movie Rows : " + insertedGenreInMovieRows);
+
     }
 
 

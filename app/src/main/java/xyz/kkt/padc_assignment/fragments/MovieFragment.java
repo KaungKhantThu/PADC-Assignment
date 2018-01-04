@@ -109,7 +109,8 @@ public class MovieFragment extends BaseFragment implements LoaderManager.LoaderC
         mSmartScrollListener = new SmartScrollListener(new SmartScrollListener.OnSmartScrollListener() {
             @Override
             public void onListEndReach() {
-                //Snackbar.make(rvNews, "This is all the data for Now.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rvMovies, "Loading new data.", Snackbar.LENGTH_LONG).show();
+                swipeRefreshLayout.setRefreshing(true);
                 MovieModel.getInstance().loadMoreMovies(getContext());
             }
         });
@@ -154,7 +155,7 @@ public class MovieFragment extends BaseFragment implements LoaderManager.LoaderC
         if (data != null && data.moveToFirst()) {
             List<MovieVO> newsList = new ArrayList<>();
             do {
-                MovieVO movies = MovieVO.parseFromCursor(data);
+                MovieVO movies = MovieVO.parseFromCursor(getContext(), data);
                 newsList.add(movies);
             } while (data.moveToNext());
             {

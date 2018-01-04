@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class MoviesDBHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "movies.db";
 
 
@@ -45,7 +45,6 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_GENRE_TABLE = "CREATE TABLE " + MoviesContract.GenreEntry.TABLE_NAME + " (" +
             MoviesContract.GenreEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             MoviesContract.GenreEntry.COLUMN_GENRE_ID + " VARCHAR(256), " +
-            MoviesContract.GenreEntry.COLUMN_GENRE_NAME + " TEXT, " +
 
             " UNIQUE (" + MoviesContract.GenreEntry.COLUMN_GENRE_ID + ") ON CONFLICT IGNORE" +
             " );";

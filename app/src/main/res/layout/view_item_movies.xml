@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tool="http://schemas.android.com/tools"
     android:layout_marginLeft="@dimen/margin_medium"
     android:layout_marginRight="@dimen/margin_medium"
     android:layout_marginTop="@dimen/margin_medium"
@@ -79,7 +80,7 @@
             android:layout_below="@id/tv_category"
             android:layout_marginLeft="@dimen/margin_small"
             android:layout_toRightOf="@id/lbl_popularity"
-            android:text="@string/desc"
+            tool:text="@string/desc"
             android:textColor="@color/secondary_text"
             android:textSize="@dimen/text_regular_2x" />
 

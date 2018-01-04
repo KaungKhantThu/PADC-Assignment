@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.kkt.padc_assignment.R;
 import xyz.kkt.padc_assignment.adapters.MovieTabAdapter;
+import xyz.kkt.padc_assignment.data.vo.MovieVO;
 import xyz.kkt.padc_assignment.delegates.MovieItemDelegate;
 import xyz.kkt.padc_assignment.events.RestApiEvents;
 import xyz.kkt.padc_assignment.fragments.MovieFragment;
@@ -72,8 +73,8 @@ public class MovieActivity extends BaseActivity implements MovieItemDelegate {
 
 
     @Override
-    public void onTapMovieItem() {
-        Intent intent = MovieDetailsActivity.newIntent(getApplicationContext());
+    public void onTapMovieItem(MovieVO movieVO) {
+        Intent intent = MovieDetailsActivity.newIntent(getApplicationContext(),movieVO.getId());
         startActivity(intent);
     }
 }
