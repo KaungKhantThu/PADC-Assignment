@@ -11,10 +11,13 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import xyz.kkt.padc_assignment.MovieApp;
 import xyz.kkt.padc_assignment.data.persistence.MoviesContract;
 import xyz.kkt.padc_assignment.data.vo.MovieVO;
 import xyz.kkt.padc_assignment.events.RestApiEvents;
+import xyz.kkt.padc_assignment.network.MovieDataAgent;
 import xyz.kkt.padc_assignment.network.MovieDataAgentImpl;
 import xyz.kkt.padc_assignment.utils.AppConstants;
 import xyz.kkt.padc_assignment.utils.ConfigUtils;
@@ -26,45 +29,54 @@ import xyz.kkt.padc_assignment.utils.ConfigUtils;
 
 public class MovieModel {
 
-    private static MovieModel objInstance;
+    //private static MovieModel objInstance;
+
+    @Inject
+    MovieDataAgent mDataAgent;
+
+    @Inject
+    ConfigUtils mConfigUtils;
 
     private List<MovieVO> mMovies;
 
-    private MovieModel() {
+    public MovieModel(Context context) {
         EventBus.getDefault().register(this);
         mMovies = new ArrayList<>();
+
+        MovieApp movieApp = (MovieApp) context.getApplicationContext();
+        movieApp.getSFCAppComponent().inject(this);
     }
 
-    public static MovieModel getInstance() {
-        if (objInstance == null) {
-            objInstance = new MovieModel();
-        }
-        return objInstance;
-    }
+//    public static MovieModel getInstance() {
+//        if (objInstance == null) {
+//            objInstance = new MovieModel();
+//        }
+//        return objInstance;
+//    }
 
     public List<MovieVO> getMovies() {
         return mMovies;
     }
 
     public void startLoadingMovies(Context context) {
-        MovieDataAgentImpl.getInstance().loadMovies(AppConstants.ACCESS_TOKEN, ConfigUtils.getObjInstance().loadPageIndex(), context);
+        mDataAgent.loadMovies(AppConstants.ACCESS_TOKEN, mConfigUtils.loadPageIndex(), context);
     }
 
     public void loadMoreMovies(Context context) {
-        int pageIndex = ConfigUtils.getObjInstance().loadPageIndex();
-        MovieDataAgentImpl.getInstance().loadMovies(AppConstants.ACCESS_TOKEN, pageIndex, context);
+        int pageIndex = mConfigUtils.loadPageIndex();
+        mDataAgent.loadMovies(AppConstants.ACCESS_TOKEN, pageIndex, context);
     }
 
     public void forceRefreshMovies(Context context) {
         mMovies = new ArrayList<>();
-        ConfigUtils.getObjInstance().savePageIndex(1);
+        mConfigUtils.savePageIndex(1);
         startLoadingMovies(context);
     }
 
     @Subscribe
     public void onMovieDataLoaded(RestApiEvents.MovieDataLoadedEvent event) {
         mMovies.addAll(event.getLoadMovies());
-        ConfigUtils.getObjInstance().savePageIndex(event.getLoadedPageIndex() + 1);
+        mConfigUtils.savePageIndex(event.getLoadedPageIndex() + 1);
 
         //TODO Logic to save the data in Persistence Layer
 

@@ -2,6 +2,7 @@ package xyz.kkt.padc_assignment.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
@@ -25,9 +26,13 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import xyz.kkt.padc_assignment.MovieApp;
 import xyz.kkt.padc_assignment.R;
+import xyz.kkt.padc_assignment.activities.MovieDetailsActivity;
 import xyz.kkt.padc_assignment.adapters.MovieAdapter;
 import xyz.kkt.padc_assignment.components.EmptyViewPod;
 import xyz.kkt.padc_assignment.components.SmartRecyclerView;
@@ -37,12 +42,15 @@ import xyz.kkt.padc_assignment.data.persistence.MoviesContract;
 import xyz.kkt.padc_assignment.data.vo.MovieVO;
 import xyz.kkt.padc_assignment.delegates.MovieItemDelegate;
 import xyz.kkt.padc_assignment.events.RestApiEvents;
+import xyz.kkt.padc_assignment.mvp.presenters.MovieListPresenter;
+import xyz.kkt.padc_assignment.mvp.views.MovieListView;
 
 /**
  * Created by Lenovo on 11/8/2017.
  */
 
-public class MovieFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MovieFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor>,
+        MovieListView {
 
     private static final int MOVIES_LIST_LOADER_ID = 1;
 
@@ -58,6 +66,9 @@ public class MovieFragment extends BaseFragment implements LoaderManager.LoaderC
 
     private MovieAdapter mMovieAdapter;
 
+    @Inject
+    MovieListPresenter mPresenter;
+
     @BindView(R.id.vp_empty_movie)
     EmptyViewPod vpEmptyMovie;
 
@@ -69,31 +80,55 @@ public class MovieFragment extends BaseFragment implements LoaderManager.LoaderC
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mMovieItemDelegate = (MovieItemDelegate) context;
+        // mMovieItemDelegate = (MovieItemDelegate) context;
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Context context = getActivity();
+
+        MovieApp movieApp = (MovieApp) context.getApplicationContext();
+        movieApp.getSFCAppComponent().inject(this);
+
+        //mPresenter = new MovieListPresenter();
+        mPresenter.onCreate(this);
+
+        mMovieAdapter = new MovieAdapter(getContext(), mPresenter);
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
-        List<MovieVO> movieList = MovieModel.getInstance().getMovies();
-        if (!movieList.isEmpty()) {
-            mMovieAdapter.setNewData(movieList);
-        } else {
-            swipeRefreshLayout.setRefreshing(true);
-        }
+        mPresenter.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.onPause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+        mPresenter.onStop();
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mMovieAdapter = new MovieAdapter(getContext(), mMovieItemDelegate);
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
     }
 
     @Nullable
@@ -111,14 +146,14 @@ public class MovieFragment extends BaseFragment implements LoaderManager.LoaderC
             public void onListEndReach() {
                 Snackbar.make(rvMovies, "Loading new data.", Snackbar.LENGTH_LONG).show();
                 swipeRefreshLayout.setRefreshing(true);
-                MovieModel.getInstance().loadMoreMovies(getContext());
+                mPresenter.onNewsListEndReach(getContext());
             }
         });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                MovieModel.getInstance().forceRefreshMovies(getContext());
+                mPresenter.onForceRefresh(getContext());
             }
         });
 
@@ -152,22 +187,34 @@ public class MovieFragment extends BaseFragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (data != null && data.moveToFirst()) {
-            List<MovieVO> newsList = new ArrayList<>();
-            do {
-                MovieVO movies = MovieVO.parseFromCursor(getContext(), data);
-                newsList.add(movies);
-            } while (data.moveToNext());
-            {
-                mMovieAdapter.setNewData(newsList);
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-        }
+        mPresenter.onDataLoaded(getContext(), data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    @Override
+    public void displayMovieList(List<MovieVO> movieList) {
+        mMovieAdapter.setNewData(movieList);
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void setTrueSwipeRefreshLayout() {
+        swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void navigateToMovieDetails(MovieVO movieVO) {
+        Intent intent = MovieDetailsActivity.newIntent(getContext(), movieVO.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public Context getContextFromView() {
+        Context context = getActivity();
+        return context.getApplicationContext();
     }
 }
