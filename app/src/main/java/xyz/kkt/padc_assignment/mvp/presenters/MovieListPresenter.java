@@ -39,12 +39,7 @@ public class MovieListPresenter extends BasePresenter<MovieListView> implements 
     @Override
     public void onStart() {
 //        EventBus.getDefault().register(this);
-        List<MovieVO> movieList = mMovieModel.getMovies();
-        if (!movieList.isEmpty()) {
-            mView.displayMovieList(movieList);
-        } else {
-            mView.setTrueSwipeRefreshLayout();
-        }
+        mView.setTrueSwipeRefreshLayout();
     }
 
     @Override

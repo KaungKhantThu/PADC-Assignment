@@ -214,7 +214,7 @@ public class MovieFragment extends BaseFragment implements LoaderManager.LoaderC
 
     @Override
     public Context getContextFromView() {
-        Context context = getActivity();
+        Context context = getActivity();//.getApplicationContext();
         return context.getApplicationContext();
     }
 }

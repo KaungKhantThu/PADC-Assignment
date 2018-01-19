@@ -11,4 +11,5 @@
     <color name="rating_star_color">#F7D61D</color>
     <color name="white_full">#FFF</color>
     <color name="black_full">#000</color>
+    <color name="transparent_black">#8000</color>
 </resources>

@@ -18,12 +18,19 @@
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
+            <ImageView
+                android:id="@+id/iv_bg_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:foreground="@color/transparent_black"
+                android:scaleType="centerCrop"
+                android:src="@drawable/anime" />
+
             <RelativeLayout
                 android:id="@+id/rl_container"
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:background="@drawable/bg_movie_details_app_bar"
-                android:fitsSystemWindows="true">
+                android:layout_height="260dp">
 
                 <ImageView
                     android:id="@+id/iv_movie_logo"
@@ -58,7 +65,7 @@
                     android:layout_marginTop="@dimen/margin_medium_2"
                     android:layout_toRightOf="@id/iv_movie_logo"
                     android:text="@string/movie_qoute"
-                    android:textColor="@color/black_full"
+                    android:textColor="@color/icons"
                     android:textSize="@dimen/text_heading_1x" />
 
                 <ScrollView
@@ -73,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/dummy_movie_desc"
-                        android:textColor="@color/black_full"
+                        android:textColor="@color/icons"
                         android:textSize="@dimen/text_regular_2x" />
                 </ScrollView>
 
@@ -84,8 +91,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
-                android:alpha="0.8"
-                android:background="@drawable/bg_movie_details_app_bar"
                 app:layout_collapseMode="pin">
 
                 <LinearLayout

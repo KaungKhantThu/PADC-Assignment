@@ -37,11 +37,8 @@ public class MovieModel {
     @Inject
     ConfigUtils mConfigUtils;
 
-    private List<MovieVO> mMovies;
-
     public MovieModel(Context context) {
         EventBus.getDefault().register(this);
-        mMovies = new ArrayList<>();
 
         MovieApp movieApp = (MovieApp) context.getApplicationContext();
         movieApp.getSFCAppComponent().inject(this);
@@ -54,10 +51,6 @@ public class MovieModel {
 //        return objInstance;
 //    }
 
-    public List<MovieVO> getMovies() {
-        return mMovies;
-    }
-
     public void startLoadingMovies(Context context) {
         mDataAgent.loadMovies(AppConstants.ACCESS_TOKEN, mConfigUtils.loadPageIndex(), context);
     }
@@ -68,14 +61,12 @@ public class MovieModel {
     }
 
     public void forceRefreshMovies(Context context) {
-        mMovies = new ArrayList<>();
         mConfigUtils.savePageIndex(1);
         startLoadingMovies(context);
     }
 
     @Subscribe
     public void onMovieDataLoaded(RestApiEvents.MovieDataLoadedEvent event) {
-        mMovies.addAll(event.getLoadMovies());
         mConfigUtils.savePageIndex(event.getLoadedPageIndex() + 1);
 
         //TODO Logic to save the data in Persistence Layer

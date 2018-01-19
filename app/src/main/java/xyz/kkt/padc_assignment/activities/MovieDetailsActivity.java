@@ -73,6 +73,9 @@ public class MovieDetailsActivity extends BaseActivity implements LoaderManager.
     @BindView(R.id.tv_movie_desc)
     TextView tvMovieDesc;
 
+    @BindView(R.id.iv_bg_img)
+    ImageView ivBgImg;
+
     @BindView(R.id.rl_container)
     RelativeLayout rlContainer;
 
@@ -173,10 +176,16 @@ public class MovieDetailsActivity extends BaseActivity implements LoaderManager.
         tvSynopis.setText(movie.getOverview());
         tvMovieDesc.setText(movie.getOverview());
 
+
         Glide
                 .with(ivMovieLogo.getContext())
                 .load("https://image.tmdb.org/t/p/original" + movie.getPosterPath())
                 .into(ivMovieLogo);
+
+        Glide
+                .with(ivBgImg.getContext())
+                .load("https://image.tmdb.org/t/p/original" + movie.getPosterPath())
+                .into(ivBgImg);
 
     }
 
